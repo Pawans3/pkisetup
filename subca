@@ -24,6 +24,10 @@ cd csr
 sudo scp subca.csr.pem shuhari@192.168.80.101:/home/shuhari/ca/subca/csr
 #### Now go to ROOTCA ####
 
+#### After configuring WWW ###
+#GO TO SUBCA TO GENERATE A CERTIFICATE FOR WWW 
+openssl ca -config subca.cnf -extensions server_cert -days 375 -notext -md sha256 -in csr/www.shuhari.local.csr.pem -out certs/www.shuhari.local.cert.pem 
+
 
 
 
