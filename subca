@@ -1,0 +1,31 @@
+mkdir subca
+cd subca
+mkdir certs crl csr newcerts private 
+chmod 700 private/ 
+touch index.txt 
+touch index.txt.attr 
+echo 1000 > serial 
+echo 1000 > crlnumber 
+download subca.cnf in subca folder  
+nano subca.cnf 
+dir = /home/shuhari/subca
+sudo apt install openssl -y
+#now generate private key
+openssl genrsa -aes256 -out private/subca.key.pem 4096 
+chmod 400 private/subca.key.pem
+#now generate CSR (certificate signing request)   
+openssl req -config subca.cnf -new -sha256 -key private/subca.key.pem -out csr/subca.csr.pem
+
+#organization name - shuhari labs 
+#unit name -IS 
+#common name - shuhari subca 
+#email info@shuhari.local
+cd csr
+sudo scp subca.csr.pem shuhari@192.168.80.101:/home/shuhari/ca/subca/csr
+#### Now go to ROOTCA ####
+
+
+
+
+
+
