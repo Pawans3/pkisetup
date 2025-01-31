@@ -1,0 +1,23 @@
+mkdir -p certs crl newcerts private subca/csr subca/certs
+chmod 700 private/ 
+touch index.txt 
+touch index.txt.attr 
+echo 1000 > serial 
+echo 1000 > crlnumber 
+# dowload rootca.cnf in rootca in ca folder
+nano rootca.cnf
+#dir = /home/shuhari/ca
+sudo apt install openssl
+openssl genrsa -aes256 -out private/ca.key.pem 4096 
+#give password
+chmod 400 private/ca.key.pem 
+openssl req -config rootca.cnf -key private/ca.key.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out certs/ca.cert.pem 
+
+#organization name- shuhari labs 
+#common name- shuhari root ca 
+#unit name - IS 
+#email info@shuhari.local 
+
+chmod 444 certs/ca.cert.pem 
+
+#done for the rootca
