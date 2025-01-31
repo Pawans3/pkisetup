@@ -13,5 +13,54 @@ email- info@shuhari.local
 #send the certificate signing request www.shuhari.local.scr.pem to the subca -- csr folde
 sudo scp www.shuhari.local.csr.pem shuhari@192.168.80.102:/home/shuhari/subca/csr/
 
-
+#### After sending all rootca subca www certs in certs folder ####
+cat www.shuhari.local.cert.pem   subca.cert.pem  ca.cert.pem > www.shuhari.local.cert_chain.pem 
 #### GO to SUBCA ####
+
+first configure the dns for www.joplin.com 
+
+Install apache2 
+
+Which openssl 
+
+Sudo a2enmod ssl 
+
+sudo a2ensite default-ssl 
+
+tree /etc/apache2/sites* 
+
+then go to the www databse and export private key and 
+
+certificate of www - export the certificate of www - .PEM without private key with chain 
+
+ 
+
+we need a store to store certificate and private key 
+
+ deb 1 
+
+crete a folder  
+
+sudo mkdir /etc/apache2/ssl 
+
+copy the private key and chain certificate to that folder 
+
+sudo nano /etc/apache2/sites--avavilable/default-ssl.conf 
+
+ServerName www.shuharilabs.local:443 
+
+SSLCertificate /etc/apache2/ssl/chain.crt (certificate name) 
+
+SSLCertificateKeyFile  /etc/apache2/ssl/privatekey 
+
+systemctl restart apache2 
+
+open chrome 
+
+https://www.shuharilabs.com 
+
+send root ca certificate to the base machine (filezilla) 
+
+and add it to the trusted root certificate (user manage certificates) 
+
+and then go to the browser and check 
